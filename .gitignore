@@ -482,7 +482,13 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-c l i e n t / n o d e _ m o d u l e s  
- c l i e n t / . v i t e  
- c l i e n t / d i s t  
+c l i e n t / n o d e _ m o d u l e s 
  
+ c l i e n t / . v i t e 
+ 
+ c l i e n t / d i s t 
+ 
+ 
+
+
+./api/appsettings.Development.json
