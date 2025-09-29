@@ -1,3 +1,5 @@
+using api;
+using api.Services;
 using Infrastructure.Postgres.Scaffolding;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +13,17 @@ builder.Services.AddDbContext<MyDbContext>(conf =>
     conf.UseNpgsql(connectionString);
 });
 
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddControllers();
+builder.Services.AddOpenApiDocument();
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<ExceptionHandler>();
+
 builder.Services.AddCors();
 
 var app = builder.Build();
+
+app.UseExceptionHandler();
 
 app.UseCors(config => config
     .AllowAnyHeader()
@@ -21,9 +31,9 @@ app.UseCors(config => config
     .AllowAnyOrigin()
     .SetIsOriginAllowed(x => true));
 
-app.MapGet("/", ([FromServices]MyDbContext dbContext) =>
-{
-    return dbContext.Books.ToList();
-});
+app.MapControllers();
+
+app.UseOpenApi();
+app.UseSwaggerUi();
 
 app.Run();
