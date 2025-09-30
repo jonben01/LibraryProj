@@ -1,6 +1,10 @@
-﻿namespace api.DTOs.Requests;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class CreateGenreRequestDto
+namespace api.DTOs.Requests;
+
+public record CreateGenreRequestDto
 {
-    
+    [Required]
+    [MinLength(1)]
+    public string Name { get; init; }
 }

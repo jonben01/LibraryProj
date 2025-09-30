@@ -1,4 +1,5 @@
-﻿using api.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
+using api.DTOs;
 using api.DTOs.Requests;
 using efscaffold.Entities;
 using Infrastructure.Postgres.Scaffolding;
@@ -15,11 +16,13 @@ public class BookService(MyDbContext context) : IBookService
             .Include(book => book.Authors)
             .Select(book => new BookDto(book))
             .ToListAsync();
-
     }
 
     public async Task<BookDto> CreateBook(CreateBookRequestDto dto)
     {
+        
+        Validator.ValidateObject(dto, new ValidationContext(dto), validateAllProperties: true);
+        
         var book = new Book
         {
             Title = dto.Title,
@@ -27,19 +30,45 @@ public class BookService(MyDbContext context) : IBookService
             Createdat = DateTime.UtcNow,
             Id = Guid.NewGuid().ToString(),
         };
+        
         context.Books.Add(book);
         await context.SaveChangesAsync();
         return new BookDto(book);
     }
-
     
-    public Task<BookDto> UpdateBook(UpdateBookRequestDto book)
+    public async Task<BookDto> UpdateBook(UpdateBookRequestDto dto)
     {
-        throw new NotImplementedException();
+        Validator.ValidateObject(dto, new ValidationContext(dto), validateAllProperties: true);
+
+        var bookToUpdate = context.Books.First(book => book.Id == dto.BookIdForUpdate);
+        
+        await context.Entry(bookToUpdate).Collection(book => book.Authors).LoadAsync();
+        
+        bookToUpdate.Title = dto.Title;
+        bookToUpdate.Pages = dto.Pages;
+        
+        //can't decide if I prefer using operators over verbose, but readable, code.
+        if (dto.GenreId is not null)
+        {
+            bookToUpdate.Genre = context.Genres.FirstOrDefault(genre => genre.Id == dto.GenreId) ??
+                                 throw new ArgumentException("Genre id not found");
+        }
+
+        bookToUpdate.Authors.Clear();
+        dto.AuthorIds.ForEach(id => bookToUpdate.Authors.Add(context.Authors.First(author => author.Id == id)));
+
+        await context.SaveChangesAsync();
+        return new BookDto(bookToUpdate);
     }
 
-    public Task<BookDto> DeleteBook(string id)
+    public async Task DeleteBook(string bookId)
     {
-        throw new NotImplementedException();
+        var bookToDelete = context.Books.FirstOrDefault(book => book.Id == bookId);
+        if (bookToDelete is null)
+        {
+            throw new InvalidOperationException($"Book with id {bookId} doesn't exist");
+        }
+        context.Books.Remove(bookToDelete);
+        await context.SaveChangesAsync();
     }
 }

@@ -1,7 +1,14 @@
-﻿namespace api.Services;
+﻿using api.DTOs;
+using api.DTOs.Requests;
+using efscaffold.Entities;
 
-public class IAuthorService
+namespace api.Services;
+
+public interface IAuthorService
 {
-    //get authors, create author, delete author, update author
-    
+    Task<List<AuthorDto>> GetAuthors();
+    Task<AuthorDto> CreateAuthor(CreateAuthorRequestDto author);
+    Task<AuthorDto> UpdateAuthor(UpdateAuthorRequestDto author);
+    Task DeleteAuthor(string authorId);
+
 }

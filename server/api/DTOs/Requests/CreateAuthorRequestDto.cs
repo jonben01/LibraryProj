@@ -1,6 +1,10 @@
-﻿namespace api.DTOs.Requests;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class CreateAuthorRequestDto
+namespace api.DTOs.Requests;
+
+public record CreateAuthorRequestDto
 {
-    
+    [Required]
+    [MinLength(1)]
+    public string Name { get; init; }
 }

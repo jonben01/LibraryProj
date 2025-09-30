@@ -35,7 +35,9 @@ public class BookController(IBookService bookService) : ControllerBase
     [HttpDelete]
     public async Task<ActionResult<BookDto>> DeleteBook(string id)
     {
-        return await bookService.DeleteBook(id);
+        await bookService.DeleteBook(id);
+        //return NoContent -- could be changed later if user should see a confirmation or similar.
+        return NoContent();
     }
     
 }

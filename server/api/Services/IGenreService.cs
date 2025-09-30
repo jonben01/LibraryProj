@@ -1,6 +1,12 @@
-﻿namespace api.Services;
+﻿using api.DTOs;
+using api.DTOs.Requests;
 
-public class IGenreService
+namespace api.Services;
+
+public interface IGenreService
 {
-    //create, read, update, delete
+    Task<List<GenreDto>> GetGenres();
+    Task<GenreDto> CreateGenre(CreateGenreRequestDto genre);
+    Task<GenreDto> UpdateGenre(UpdateGenreRequestDto genre);
+    Task DeleteGenre(string genreId);
 }
