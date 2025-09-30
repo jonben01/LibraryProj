@@ -13,5 +13,5 @@ public record UpdateAuthorRequestDto
     public string AuthorIdForUpdate { get; init; }
     
     [Required]
-    public List<string> BooksIds { get; init; }
+    public List<string> BookIds { get; init; }
 }

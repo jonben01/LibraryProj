@@ -7,8 +7,8 @@ namespace api.Services;
 public interface IAuthorService
 {
     Task<List<AuthorDto>> GetAuthors();
-    Task<AuthorDto> CreateAuthor(CreateAuthorRequestDto author);
-    Task<AuthorDto> UpdateAuthor(UpdateAuthorRequestDto author);
+    Task<AuthorDto> CreateAuthor(CreateAuthorRequestDto dto);
+    Task<AuthorDto> UpdateAuthor(UpdateAuthorRequestDto dto);
     Task DeleteAuthor(string authorId);
 
 }

@@ -16,7 +16,8 @@ public record UpdateBookRequestDto
     [MinLength(1)]
     public string Title { get; set; }
 
-    [Required] public List<string> AuthorIds { get; set; } = [];
+    [Required] 
+    public List<string> AuthorIds { get; set; } = [];
     
     public string? GenreId { get; set; }
 }
