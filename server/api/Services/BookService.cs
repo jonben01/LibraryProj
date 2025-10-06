@@ -2,7 +2,7 @@
 using api.DTOs;
 using api.DTOs.Requests;
 using efscaffold.Entities;
-using Infrastructure.Postgres.Scaffolding;
+using efscaffold;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Services;

@@ -29,7 +29,7 @@ public class AuthorController(IAuthorService authorService)  : ControllerBase
         return await authorService.UpdateAuthor(request);
     }
 
-    [Route(nameof(UpdateAuthor))]
+    [Route(nameof(DeleteAuthor))]
     [HttpDelete]
     public async Task<ActionResult<AuthorDto>> DeleteAuthor(string id)
     {

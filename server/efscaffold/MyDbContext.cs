@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using efscaffold.Entities;
 
-namespace Infrastructure.Postgres.Scaffolding;
+namespace efscaffold;
 
 public partial class MyDbContext : DbContext
 {
@@ -56,12 +56,12 @@ public partial class MyDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Createdat).HasColumnName("createdat");
-            entity.Property(e => e.Genreid).HasColumnName("genreid");
+            entity.Property(e => e.GenreId).HasColumnName("genreid");
             entity.Property(e => e.Pages).HasColumnName("pages");
             entity.Property(e => e.Title).HasColumnName("title");
 
             entity.HasOne(d => d.Genre).WithMany(p => p.Books)
-                .HasForeignKey(d => d.Genreid)
+                .HasForeignKey(d => d.GenreId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("book_genreid_fkey");
         });

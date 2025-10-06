@@ -11,7 +11,7 @@ public partial class Book
 
     public DateTime? Createdat { get; set; }
 
-    public string? Genreid { get; set; }
+    public string? GenreId { get; set; }
 
     public virtual Genre? Genre { get; set; }
 
