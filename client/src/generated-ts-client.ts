@@ -494,7 +494,7 @@ export interface BookDto {
     title?: string;
     pages?: number;
     createdAt?: string | undefined;
-    authorsIds?: string[];
+    authorIds?: string[];
     genreId?: string | undefined;
 }
 
